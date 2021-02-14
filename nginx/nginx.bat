@@ -9,7 +9,6 @@ if "%1"=="-s" (
     goto end
 ) else if "%1"=="-d" (
     echo "nginx delete"
-    docker stop nginx_1
     docker rm nginx_1
     goto end
 ) else if "%1"=="-m" (
