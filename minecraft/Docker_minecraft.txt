@@ -1,0 +1,11 @@
+docker run -d -e EULA=TRUE -p 25565:25565 -v Minecraft_Data:/data --name Docker_minecraft -e VERSION=1.12.2 itzg/minecraft-server
+
+docker stop Docker_minecraft
+
+docker rm Docker_minecraft
+
+docker volume ls
+docker volume rm  Minecraft_Data
+
+docker exec -i Docker_minecraft rcon-cli
+
