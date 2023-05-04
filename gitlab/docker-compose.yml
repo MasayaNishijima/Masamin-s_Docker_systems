@@ -1,0 +1,28 @@
+version: '3.6'
+services:
+  web:
+    image: 'gitlab/gitlab-ee:latest'
+    restart: always
+    hostname: 'gitlab.nishimin.net'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.nishimin.net:11080'
+        gitlab_rails['gitlab_shell_ssh_port'] = 10022
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "mailcatcher"
+        gitlab_rails['smtp_port'] = 1025
+        gitlab_rails['smtp_domain'] = "gitlab.nishimin.net"
+        gitlab_rails['gitlab_email_from'] = 'gitlab@gitlab.nishimin.net'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@gitlab.nishimin.net'
+    ports:
+      - '11080:11080'
+      - '10022:22'
+    volumes:
+      - './data/config:/etc/gitlab'
+      - './data/logs:/var/log/gitlab'
+      - './data/data:/var/opt/gitlab'
+    shm_size: '256m'
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
